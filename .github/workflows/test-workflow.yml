@@ -1,22 +1,40 @@
-name: My Test Workflow
+# Workflow name
+name: My First Workflow
 
+# Triggers for the workflow
 on:
+  # Manual trigger using the workflow_dispatch event
+  workflow_dispatch:
+
+  # Automatic trigger on push events to the main branch
   push:
     branches:
       - main
 
+  # Automatic trigger on pull request events targeting the main branch
+  pull_request:
+    branches:
+      - main
+
+  # Scheduled trigger at 5:00 AM UTC, Monday through Friday
+  schedule:
+    - cron: "0 5 * * 1-5"
+
+# Jobs defined in the workflow
 jobs:
   build:
+    # The operating system for the runner
     runs-on: ubuntu-latest
 
+    # Steps in the job
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js 18
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: latest
 
       - name: Print a message
         run: echo "Hello, world!"
